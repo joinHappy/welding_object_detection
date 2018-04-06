@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 flags = tf.app.flags
-flags.DEFINE_string('annotations_dir', 'D:\\University\\GraduationDesign\\Data\\O\\Annotations',
+flags.DEFINE_string('annotations_dir', 'D:\\有问题数据\\txt',
                     'Path where the annotations save')
 
 # flags.DEFINE_string('./', '', './')
@@ -21,7 +21,8 @@ def ans_fixed():
         with open(ans_file, 'rt') as f:
             line = f.read()
 
-        new_line = ans_file[0:-4] + " " + line[:-2] + " Oweld 4"
+        new_line = ans_file[0:-4] + " " + line[:-2] + " Lweld 1"
+        # new_line = ans_file + " " + line[:-2] + " Vweld 2"
 
         with open(ans_file, 'wt') as f_write:
             f_write.write(new_line)
