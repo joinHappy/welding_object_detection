@@ -5,9 +5,9 @@ import os
 
 flags = tf.app.flags
 
-flags.DEFINE_string('img_dir', 'D:\\University\\Data\\new\\imgs',
+flags.DEFINE_string('img_dir', 'D:\\University\\train\\imgs',
                     'Path where the imgs live')
-flags.DEFINE_string('ans_dir', 'D:\\University\\Data\\new\\Annotations',
+flags.DEFINE_string('ans_dir', 'D:\\University\\train\\Annotations',
                     'Path where the Annotations live')
 
 FLAGS = flags.FLAGS
