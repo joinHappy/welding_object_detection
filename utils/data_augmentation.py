@@ -1,6 +1,7 @@
 """Data format must be the same as PascalVOC."""
 
 import os
+<<<<<<< HEAD
 import cv2
 import random
 
@@ -15,11 +16,25 @@ flags.DEFINE_string('ans_dir', 'D:\\University\\train\\Annotations',
 flags.DEFINE_string('new_ans_dir', '',
                     'Path where the new annotations file save')
 flags.DEFINE_string('new_img_dir', '',
+=======
+import tensorflow as tf
+import cv2
+
+flags = tf.app.flags
+flags.DEFINE_string('annotations_dir', 'D:\\有问题数据\\img\\L',
+                    'Path where the annotations file save')
+flags.DEFINE_string('imgs_dir', '',
+                    'Path where the image file save')
+flags.DEFINE_string('new_annotations_dir', '',
+                    'Path where the new annotations file save')
+flags.DEFINE_string('new_imgs_dir', '',
+>>>>>>> parent of dbeaf18... Merge branch 'dev' of https://github.com/Sophistt/welding_object_detection into dev
                     'Path where the new image file save')
 
 FLAGS = flags.FLAGS
 
 
+<<<<<<< HEAD
 def read_image(path_to_img, path_to_ans):
     """Todo."""
     img = cv2.imread(path_to_img)
@@ -36,6 +51,10 @@ def read_image(path_to_img, path_to_ans):
 
 
 def random_horizontal_flip(img, coordinates):
+=======
+def random_horizontal_flip(image,
+							annotations):
+>>>>>>> parent of dbeaf18... Merge branch 'dev' of https://github.com/Sophistt/welding_object_detection into dev
     """TODO."""
     return 0
 
@@ -45,6 +64,7 @@ def random_vertical_flip():
     return 0
 
 
+<<<<<<< HEAD
 def random_shift_image(img, coordinates):
     """TODO."""
     x_min, y_min, x_max, y_max = coordinates[0] - \
@@ -119,10 +139,25 @@ def random_adjust_contrast(img, coordinates):
     cv2.imshow('ad_brightness_img', ad_brightness_img)
     cv2.waitKey(-1)
     cv2.destroyAllWindows()
+=======
+def random_shift_image():
+    """TODO."""
+    return 0
+
+
+def random_rotate_image():
+    """TODO."""
+    return 0
+
+
+def add_noise_image():
+    """TODO."""
+>>>>>>> parent of dbeaf18... Merge branch 'dev' of https://github.com/Sophistt/welding_object_detection into dev
     return 0
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     filename = input('Please input the file name: ')
 
     img_name = os.path.join(os.path.expanduser(FLAGS.img_dir), (filename + '.jpg'))
@@ -135,3 +170,7 @@ if __name__ == "__main__":
     # random_rotate_image(img, coordinates)
     # random_adjust_contrast(img, coordinates)
     add_gauss_noise(img, coordinates, 0, 20)
+=======
+
+    return 0
+>>>>>>> parent of dbeaf18... Merge branch 'dev' of https://github.com/Sophistt/welding_object_detection into dev
