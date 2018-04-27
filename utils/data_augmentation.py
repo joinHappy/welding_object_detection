@@ -84,32 +84,45 @@ def random_shift_image(img, coordinates, img_name):
 
     new_img_name = img_name + '_x_{}_y_{}'.format(x_shift, y_shift)
 
-    """
-    homo_coordinates = np.float16([coordinates[0], coordinates[1], 1])
-    trans_matrix = np.float16([[1, 0, 0],
-                               [0, 1, 0],
-                               [100, 200, 1]])
-    trans_coordinates = np.matmul(homo_coordinates, trans_matrix)
-    print(trans_coordinates)
-    """
     return shift_img, trans_x_center, trans_y_center, weld_type, new_img_name
 
 
-def random_rotate_image(img, coordinates):
+def random_rotate_image(img, coordinates, img_name):
     """TODO."""
-    x_min, y_min, x_max, y_max = coordinates[0] - \
-        75, coordinates[1] - 75, coordinates[0] + 75, coordinates[1] + 75
-
+    degree_rotate = random.randint(-90, 90)
+    
     rows, cols, channels = img.shape
+    print('{} {}'.format(rows, cols))
 
-    rotate_matrix = cv2.getRotationMatrix2D((cols / 2, rows / 2), 10, 1)
+    # rotate_matrix = cv2.getRotationMatrix2D((cols / 2, rows / 2), 10, 1)
+    rotate_matrix = cv2.getRotationMatrix2D((0, 0), 10, 1)
     rotate_img = cv2.warpAffine(img, rotate_matrix, (cols, rows))
 
+    homo_coordinates = np.float16([coordinates[0], coordinates[1], 1])
+
+    lr = rows / 2 * (1 - np.cos(0.0174 * 10)) + cols / 2 * np.sin(0.0174 * 10)
+    mr = cols / 2 * (1 - np.cos(0.0174 * 10)) - rows / 2 * np.sin(0.0174 * 10)
+    trans_matrix = np.float16([[np.cos(0.0174 * 10), np.sin(0.0174 * 10), 0],
+                               [-np.sin(0.0174 * 10), np.cos(0.0174 * 10), 0],
+                               [lr, mr, 1]])
+
+    trans_coordinates = np.matmul(homo_coordinates, trans_matrix)
+
+    trans_x_center = trans_coordinates[0]
+    trans_y_center = trans_coordinates[1]
+    weld_type = coordinates[2]
+
+    new_img_name = img_name + '_p_{}_d_{}'.format(0, 10)
+    print(trans_coordinates)
+
+    """
     cv2.imshow('img', img)
     cv2.imshow('rotate_img', rotate_img)
     cv2.waitKey(-1)
     cv2.destroyAllWindows()
     return 0
+    """
+    return rotate_img, trans_x_center, trans_y_center, weld_type, new_img_name
 
 
 def add_gauss_noise(img, coordinates, mu, sigma):
@@ -162,9 +175,10 @@ if __name__ == "__main__":
     img, coordinates = read_image(img_name, ans_name)
     print('x_center: ', coordinates[0], ' y_center: ', coordinates[1])
 
-    shift_img, trans_x_center, trans_y_center, weld_type, new_img_name = random_shift_image(img, coordinates, filename)
-    generate_img_and_ans(shift_img, trans_x_center, trans_y_center, weld_type, new_img_name)
+    # shift_img, trans_x_center, trans_y_center, weld_type, new_img_name = random_shift_image(img, coordinates, filename)
+    # generate_img_and_ans(shift_img, trans_x_center, trans_y_center, weld_type, new_img_name)
 
-    # random_rotate_image(img, coordinates)
+    rotate_img, trans_x_center, trans_y_center, weld_type, new_img_name = random_rotate_image(img, coordinates, filename)
+    generate_img_and_ans(rotate_img, trans_x_center, trans_y_center, weld_type, new_img_name)
     # random_adjust_contrast(img, coordinates)
     # add_gauss_noise(img, coordinates, 0, 20)
